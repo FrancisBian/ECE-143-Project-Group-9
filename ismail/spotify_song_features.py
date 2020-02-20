@@ -11,7 +11,7 @@ import re
 # Parameters
 git_path = 'C:/Users/iocak/OneDrive/Masaüstü/git/ece143project/'
 credentials_path = "C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/credentials.txt"
-hot_list_path = 'dataset_hot_list/'
+hot_list_path = 'newVersionOfLyrics/'
 target_path = 'spotify_features_csvs/'
 
 credentials = pd.read_csv(credentials_path)
