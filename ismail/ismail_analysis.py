@@ -21,10 +21,10 @@ hot_list_path = 'newVersionOfLyrics/'
 target_path = 'spotify_features_csvs/'
 
 # read combined data
-combined_df = pd.read_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
+combined_df = pd.read_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres.parquet')
 
 # genre names
-genre_names = ['classical', 'electronic_dance_disco', 'funk_soul', 'hip_hop', 'jazz', 'latin',
+genre_names = ['classical', 'electronic', 'funk_soul', 'hip_hop', 'jazz', 'latin',
                'other', 'pop', 'rnb', 'reggae', 'rock', 'world', 'country', 'blues',
                'religious', 'folk', 'indie', 'adult_standards', 'unclassified']
 
@@ -37,7 +37,7 @@ yearly_genres[list(yearly_genres.columns[1:])] = np.array(yearly_genres[list(yea
 
 # plot
 # plt.plot(yearly_genres['date'], yearly_genres['classical'], label = 'classical')
-plt.plot(yearly_genres['date'], yearly_genres['electronic_dance_disco'], label = 'electronic_dance_disco')
+plt.plot(yearly_genres['date'], yearly_genres['electronic'], label = 'electronic')
 plt.plot(yearly_genres['date'], yearly_genres['funk_soul'], label = 'funk_soul')
 plt.plot(yearly_genres['date'], yearly_genres['hip_hop'], label = 'hip_hop')
 plt.plot(yearly_genres['date'], yearly_genres['jazz'], label = 'jazz')
@@ -74,4 +74,17 @@ plt.plot(yearly_sentiment['date'], yearly_sentiment['sentiment'])
 # trial 
 temp = combined_df[combined_df['artists'].str.contains('Britney Spears')].groupby('date')['sentiment'].mean().reset_index()
 plt.plot(temp['date'].astype(str), temp['sentiment'])
+
+
+
+
+
+
+
+
+
+
+
+
+
 
