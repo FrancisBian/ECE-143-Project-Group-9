@@ -4,6 +4,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials #To access authorised Spotify data
 import os
 import re
+from difflib import SequenceMatcher
 
 # read spotipy credentials (a txt file of clientid and secretid)
 # refer here if you have problems https://medium.com/@RareLoot/extracting-spotify-data-on-your-favourite-artist-via-python-d58bc92a4330
@@ -43,26 +44,45 @@ def spotify_feature_extractor(query_song, query_artist, index_val):
     query_string = '{%s, %s}' % (query_song, query_artist) #keywords for query: song name, artist
     result = sp.search(query_string) #search query
     
+    similarities = pd.DataFrame(columns = ['title_similarity', 'artist_similarity'])
+    
+    # find the record with best match
+    for i in range(len(result['tracks']['items'])):
+        title_found = result['tracks']['items'][i]['name']
+        artist_found = result['tracks']['items'][i]['artists'][0]['name']
+        
+        title_similarity = SequenceMatcher(None, query_song, title_found).ratio()
+        artist_similarity = SequenceMatcher(None, query_artist, artist_found).ratio()
+        
+        temp_df = pd.DataFrame({'title_similarity' : title_similarity, 'artist_similarity' : artist_similarity}, index = [0])
+        
+        similarities = pd.concat([similarities, temp_df])
+    
+    similarities = similarities.reset_index(drop = True)
+    similarities['avg_sim'] = (similarities['title_similarity'] + similarities['artist_similarity']) / 2
+    
+    best_match = similarities.loc[similarities['avg_sim'] == np.max(similarities['avg_sim'])].reset_index()['index'][0]
+    
     # Song Features
     song_dict = {}
     
     # name and id
-    song_dict['song_name'] = result['tracks']['items'][0]['name']
-    song_dict['song_link'] = result['tracks']['items'][0]['external_urls']['spotify']
-    song_dict['song_id'] = result['tracks']['items'][0]['id']
-    song_dict['song_uri'] = result['tracks']['items'][0]['uri']
-    song_dict['album_name'] = result['tracks']['items'][0]['album']['name']
-    song_dict['album_id'] = result['tracks']['items'][0]['album']['id']
-    song_dict['album_uri'] = result['tracks']['items'][0]['album']['uri']
-    song_dict['artist_name'] = result['tracks']['items'][0]['artists'][0]['name']
-    song_dict['artist_id'] = result['tracks']['items'][0]['artists'][0]['id']
-    song_dict['artist_uri'] = result['tracks']['items'][0]['artists'][0]['uri']
+    song_dict['song_name'] = result['tracks']['items'][best_match]['name']
+    song_dict['song_link'] = result['tracks']['items'][best_match]['external_urls']['spotify']
+    song_dict['song_id'] = result['tracks']['items'][best_match]['id']
+    song_dict['song_uri'] = result['tracks']['items'][best_match]['uri']
+    song_dict['album_name'] = result['tracks']['items'][best_match]['album']['name']
+    song_dict['album_id'] = result['tracks']['items'][best_match]['album']['id']
+    song_dict['album_uri'] = result['tracks']['items'][best_match]['album']['uri']
+    song_dict['artist_name'] = result['tracks']['items'][best_match]['artists'][0]['name']
+    song_dict['artist_id'] = result['tracks']['items'][best_match]['artists'][0]['id']
+    song_dict['artist_uri'] = result['tracks']['items'][best_match]['artists'][0]['uri']
     
     # analysis features
-    song_dict['duration_seconds'] = result['tracks']['items'][0]['duration_ms'] / 1000
-    song_dict['album_song_count'] =  result['tracks']['items'][0]['album']['total_tracks']
-    song_dict['song_popularity'] = result['tracks']['items'][0]['popularity']
-    song_dict['album_release_date'] = result['tracks']['items'][0]['album']['release_date']
+    song_dict['duration_seconds'] = result['tracks']['items'][best_match]['duration_ms'] / 1000
+    song_dict['album_song_count'] =  result['tracks']['items'][best_match]['album']['total_tracks']
+    song_dict['song_popularity'] = result['tracks']['items'][best_match]['popularity']
+    song_dict['album_release_date'] = result['tracks']['items'][best_match]['album']['release_date']
     
     audio_features_dict = sp.audio_features(song_dict['song_uri'])[0]
     artist_features_dict = sp.artist(song_dict['artist_id'])
@@ -108,6 +128,3 @@ for i in hotlist_files:
             print(f'!!!ERROR!!! {j}/{len(hot_csv)} of file {i}')
         
     hot_year_features.to_csv(git_path + target_path + i)
-            
-    
-    
