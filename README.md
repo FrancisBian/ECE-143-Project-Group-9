@@ -6,7 +6,7 @@
 Codes:
 
 1- Data Prep
-	a- data_extract.ipynb
-	b- spotify_song_features.py 
-	c- combine&save_hotlist&spotify.ipynb
-	d- dataprep_genre.py
+a- data_extract.ipynb
+b- spotify_song_features.py 
+c- combine&save_hotlist&spotify.ipynb
+d- dataprep_genre.py
