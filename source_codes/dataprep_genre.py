@@ -5,6 +5,11 @@ from spotipy.oauth2 import SpotifyClientCredentials #To access authorised Spotif
 import os
 import re
 import itertools
+import matplotlib.pyplot as plt
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from textblob import TextBlob
+import nltk
+from newspaper import Article
 
 # read spotipy credentials (a txt file of clientid and secretid)
 # refer here if you have problems https://medium.com/@RareLoot/extracting-spotify-data-on-your-favourite-artist-via-python-d58bc92a4330
@@ -12,8 +17,8 @@ import itertools
 # Parameters
 git_path = 'C:/Users/iocak/OneDrive/Masaüstü/git/ece143project/'
 credentials_path = "C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/credentials.txt"
-hot_list_path = 'newVersionOfLyrics/'
-target_path = 'spotify_features_csvs/'
+hot_list_path = 'data/newVersionOfLyrics/'
+combined_path = 'data/combined_dataset/'
 
 credentials = pd.read_csv(credentials_path)
 hotlist_files = os.listdir(git_path + hot_list_path)
@@ -22,13 +27,13 @@ hotlist_files = [i for i in hotlist_files if '.csv' in i]
 
 # read combined data
 
-file_names = os.listdir(git_path + 'combined_dataset/')
+file_names = os.listdir(git_path + combined_path)
 
 combined_df = pd.DataFrame()
 
 for i in file_names:
         if '.csv' in i:
-            temp_file = pd.read_csv(git_path + 'combined_dataset/' + i)
+            temp_file = pd.read_csv(git_path + combined_path + i)
             combined_df = pd.concat([combined_df, temp_file], axis = 0)
             
             print(i)
@@ -126,5 +131,46 @@ combined_df_genres.sum() # looks good, low number of unclassified
 combined_df = pd.concat([combined_df, combined_df_genres], axis = 1)
 
 # save the final table (too large, cannot  upload to github)
-combined_df.to_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
+#combined_df.to_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
+#combined_df = pd.read_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
 
+
+# sentiment analysis data
+
+#combined_df['sentiment'] = combined_df['lyrics'].apply(lambda x: TextBlob(x).sentiment.polarity)
+sid = SentimentIntensityAnalyzer()
+
+combined_df['sentiment'] = 0
+combined_df.loc[combined_df['valid'] == 1, 'sentiment'] = combined_df.loc[combined_df['valid'] == 1]['lyrics'].apply(lambda x: -1 * sid.polarity_scores(x)['neg'] + sid.polarity_scores(x)['pos'])
+
+#combined_df.to_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
+
+# attach new columns to combined dataset
+
+filter_columns = ['artists', 'title', 'date',
+       'classical', 'electronic_dance_disco', 'funk_soul', 'hip_hop', 'jazz',
+       'latin', 'other', 'pop', 'rnb', 'reggae', 'rock', 'world', 'country',
+       'blues', 'religious', 'folk', 'indie', 'adult_standards',
+       'unclassified', 'sentiment']
+
+for i in file_names:
+    if '.csv' in i:
+        temp_file = pd.read_csv(git_path + combined_path + i)
+        
+        row_beg = len(temp_file)
+        temp_file = pd.merge(temp_file, 
+                             combined_df[filter_columns], 
+                             how = 'left', 
+                             on = ['artists', 'title', 'date'])
+        row_end = len(temp_file)
+        
+        if row_beg != row_end:
+            print(i, 'duplicate error')
+            break
+        
+        if len(temp_file[temp_file['unclassified'].isnull()]) > 0:
+            print(i, 'null record, check')
+            
+        temp_file.to_csv(git_path + combined_path + i, index = False)
+        
+        print(i)
