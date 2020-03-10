@@ -6,14 +6,15 @@ import os
 import re
 from difflib import SequenceMatcher
 
+# Parameters
+git_path = os.getcwd() 
+hot_list_path = '/data/newVersionOfLyrics/'
+target_path = '/spotify_features_csvs/'
+
+## This part is for reading spotify credentials, if you dont have credentials then refer to the document below
 # read spotipy credentials (a txt file of clientid and secretid)
 # refer here if you have problems https://medium.com/@RareLoot/extracting-spotify-data-on-your-favourite-artist-via-python-d58bc92a4330
-
-# Parameters
-git_path = 'C:/Users/iocak/OneDrive/Masaüstü/git/ece143project/'
-credentials_path = "C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/credentials.txt"
-hot_list_path = 'newVersionOfLyrics/'
-target_path = 'spotify_features_csvs/'
+credentials_path = '../credentials.txt'
 
 credentials = pd.read_csv(credentials_path)
 hotlist_files = os.listdir(git_path + hot_list_path)
@@ -107,10 +108,7 @@ def spotify_feature_extractor(query_song, query_artist, index_val):
     
     return song_df
 
-# Problem Points:
-# Song Name might not - mismatch with something on Spotify
-# We need to double check after code runs
-
+# CALL THE FUNCTION, GET SPOTIFY FEATURES, SAVE THEM
 for i in hotlist_files:
     
     hot_csv = pd.read_csv(git_path + hot_list_path + i)
