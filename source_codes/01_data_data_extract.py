@@ -1,13 +1,12 @@
-! pip install billboard.py
 import billboard
+import pandas as pd
+import lyricsgenius
+
 hot_list_100 = {}
 
-# chart = billboard.ChartData('hot-100', '1998-02-01')
 chart = billboard.ChartData('hot-100')
 
-
-# Try to get the previous top100 list
-# You may not want to run this part of code, it's just a test and will never stop
+# Try to get the previous top100 list from 1960 to 2020
 while chart.previousDate:
     year = chart.date.split("-")[0]
     if(year == "1959"):
@@ -20,16 +19,12 @@ while chart.previousDate:
             hot_list_100[year][i]['cnt'] += 1
             hot_list_100[year][i]['rank'].append(i.rank)
         else:
-#             print(i.title)
-#             print(i)
             hot_list_100[year][i] = {}
             hot_list_100[year][i]['cnt'] = 1
             hot_list_100[year][i]['rank'] = [i.rank]
             hot_list_100[year][i]['artist'] = i.artist
             hot_list_100[year][i]['title'] = i.title
         
-
-    # print(chart)
     while True:
         try:
             chart = billboard.ChartData('hot-100', chart.previousDate)
@@ -39,18 +34,14 @@ while chart.previousDate:
             break
 
 
-import pandas as pd
-
 dataframe = pd.DataFrame({'hot_list_100':hot_list_100})
 
 dataframe.to_csv("songlist.csv",index=True,sep=',')
 print("success")
-# Save the data in csv file
+# Save the data in csv file songlist.csv
 
-
-import lyricsgenius
-# This is my lyricsgenius id
-genius = lyricsgenius.Genius("lISrOoq8wD1T9e_Ta1ggsWuEnf9eeHfTWR-pSSV5puvg5ZYh-K9J9tX515Xg4wL8")
+genius = lyricsgenius.Genius("Add Your Id Here")
+# This will use your lyricsgenius id
 
 
 # Try to get the lyrics and some other information of a song
@@ -71,6 +62,7 @@ for i in range(1999, 2021):
         for song in hotlist:
             try:
                 s = genius.search_song(song + ' by ' + hotlist[song]['artist'])
+                # use the lyrics genius api to search for "songname by artist"
                 if s == None:
                     continue
             except:
@@ -87,6 +79,6 @@ for i in range(1999, 2021):
 
     dataframe = pd.DataFrame({'title':title, 'lyrics':lyrics, 'artistsFromLyrics':artists, 'artists':artists_from_list, 'date':date, 'rank':rank, 'cnt': cnt})
 
-    dataframe.to_csv("lyricsHotListTopNew_" + str(date[0]) + ".csv",index=True,sep=',')
+    dataframe.to_csv("lyricsHotListTopNew_" + str(date[0]) + ".csv", index=True,sep=',')
     print("success" + str(i))
-# Save the data in csv file
+    # Save the data in csv file lyricsHotListTopNew_year.cvs
