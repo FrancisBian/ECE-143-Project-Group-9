@@ -1,4 +1,4 @@
-<a href="https://www.billboard.com/charts/hot-100"><img src="unnamed.png" alt="Italian Trulli"></a>
+<a href="https://www.billboard.com/charts/hot-100"><img src="img/billboard_snippet.png" alt="Italian Trulli"></a>
 
 # Analyzing Trends of Music Lyrics and Features Throughout the Decades
 
