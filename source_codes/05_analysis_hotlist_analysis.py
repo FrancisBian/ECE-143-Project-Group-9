@@ -17,6 +17,9 @@ from  plotly.offline import plot
 import plotly.graph_objs as go
 import plotly.io as pio
 
+import analysis_artist_popularity
+from analysis_artist_popularity import *
+
 
 csv.field_size_limit(sys.maxsize)
 print(string.punctuation)
@@ -154,15 +157,15 @@ for year in range(1960, 2021):
     yearly_average_highest_rank[year] = get_average_highest_rank(df)
     #yearly_released_month[year] = get_released_month(df)
     
+def plotAverageLength():
+    plt.title("Average length")
+    plt.plot([sum(v)/len(v) for k,v in yearly_length_dict.items()])
+    positions = [i for i in range(0, 61, 10)]
+    labels = [(str)(i + 1960) for i in range(0, 61, 10)]
+    plt.xticks(positions, labels)
+    plt.locator_params(axis='x', nbins=8)
 
-plt.title("Average length")
-plt.plot([sum(v)/len(v) for k,v in yearly_length_dict.items()])
-positions = [i for i in range(0, 61, 10)]
-labels = [(str)(i + 1960) for i in range(0, 61, 10)]
-plt.xticks(positions, labels)
-plt.locator_params(axis='x', nbins=8)
-
-
+'''
 trace0 = go.Scatter(
     x=[k for k,v in yearly_length_dict.items() if k != 2020],
     y=[200 for k,v in yearly_length_dict.items() if k != 2020],
@@ -251,60 +254,65 @@ layout = go.Layout(
         gridcolor='rgb(233, 233, 233)',
     )
 )
-    
+
+'''
+
 data = [trace0, trace1]
 fig = go.Figure(data=data, layout=layout)
 plot(fig)
 
+def plotExpectancy(yearly_average_occ):
+    plt.title("Average expectancy of each song in the billboard")
+    plt.plot([v for k,v in yearly_average_occ.items()])
+    positions = [i for i in range(0, 61, 10)]
+    labels = [(str)(i + 1960) for i in range(0, 61, 10)]
+    plt.xticks(positions, labels)
+    plt.locator_params(axis='x', nbins=8)
 
-plt.title("Average expectancy of each song in the billboard")
-plt.plot([v for k,v in yearly_average_occ.items()])
-positions = [i for i in range(0, 61, 10)]
-labels = [(str)(i + 1960) for i in range(0, 61, 10)]
-plt.xticks(positions, labels)
-plt.locator_params(axis='x', nbins=8)
-
-plt.title("Average number of songs on the billboard HOT 100")
-plt.plot([len(s) for y,s in yearly_songs_dict.items()])
-positions = [i for i in range(0, 61, 10)]
-labels = [(str)(i + 1960) for i in range(0, 61, 10)]
-plt.xticks(positions, labels)
-plt.locator_params(axis='x', nbins=8)
-
-
-plt.title("Average highest rank of each song in the billboard")
-plt.plot([v for k,v in yearly_average_highest_rank.items()])
-positions = [i for i in range(0, 61, 10)]
-labels = [(str)(i + 1960) for i in range(0, 61, 10)]
-plt.xticks(positions, labels)
-plt.locator_params(axis='x', nbins=8)
+def plotAvgNumSongs(yearly_songs_dict):
+    plt.title("Average number of songs on the billboard HOT 100")
+    plt.plot([len(s) for y,s in yearly_songs_dict.items()])
+    positions = [i for i in range(0, 61, 10)]
+    labels = [(str)(i + 1960) for i in range(0, 61, 10)]
+    plt.xticks(positions, labels)
+    plt.locator_params(axis='x', nbins=8)
 
 
-plt.title("Number of artists showing in the billboard each year")
-plt.plot([len(v) for k,v in yearly_artists_dict.items()])
-positions = [i for i in range(0, 61, 10)]
-labels = [(str)(i + 1960) for i in range(0, 61, 10)]
-plt.xticks(positions, labels)
-plt.locator_params(axis='x', nbins=8)
+def plotAvgHighestRank(yearly_average_highest_rank):
+    plt.title("Average highest rank of each song in the billboard")
+    plt.plot([v for k,v in yearly_average_highest_rank.items()])
+    positions = [i for i in range(0, 61, 10)]
+    labels = [(str)(i + 1960) for i in range(0, 61, 10)]
+    plt.xticks(positions, labels)
+    plt.locator_params(axis='x', nbins=8)
 
 
-vectorizer = TfidfVectorizer()
-vectors = vectorizer.fit_transform([' '.join(yearly_words_dict[year]) for year in range(1960, 2021)])
-feature_names = vectorizer.get_feature_names()
-dense = vectors.todense()
-denselist = dense.tolist()
-df = pd.DataFrame(denselist, columns=feature_names)
+def plotNumArtistsYearly(yearly_artists_dict):
+    plt.title("Number of artists showing in the billboard each year")
+    plt.plot([len(v) for k,v in yearly_artists_dict.items()])
+    positions = [i for i in range(0, 61, 10)]
+    labels = [(str)(i + 1960) for i in range(0, 61, 10)]
+    plt.xticks(positions, labels)
+    plt.locator_params(axis='x', nbins=8)
 
-for index, row in df.iterrows():
-    df = df.sort_values(by=index, axis=1, ascending=False)
-    print(df.columns[0:10])
+def tfldf_analysis():
+    vectorizer = TfidfVectorizer()
+    vectors = vectorizer.fit_transform([' '.join(yearly_words_dict[year]) for year in range(1960, 2021)])
+    feature_names = vectorizer.get_feature_names()
+    dense = vectors.todense()
+    denselist = dense.tolist()
+    df = pd.DataFrame(denselist, columns=feature_names)
+
+    for index, row in df.iterrows():
+        df = df.sort_values(by=index, axis=1, ascending=False)
+        print(df.columns[0:10])
 
 
 # ### General and interesting findings
 
 artist_songs_count = {a:len(b) for a,b in artist_songs_dict.items()}
 sorted_artists = sorted(artist_songs_count.items(), key=lambda x: x[1], reverse=True)
-print(sorted_artists[:5])
+#print(sorted_artists[:5])
 
 
 # #### 2) Artist appears most in billboard (by cnt)?
@@ -312,7 +320,7 @@ print(sorted_artists[:5])
 
 
 sorted_artists_occ = sorted(artist_occ_dict.items(), key=lambda x: x[1], reverse=True)
-print(sorted_artists_occ[:10])
+#print(sorted_artists_occ[:10])
 
 
 # #### 4) Songs that appear in the hot100 list most.
@@ -333,9 +341,9 @@ for k,v in songs_years_ranks.items():
 sorted_songs_top100 = sorted(songs_top100.items(), key=lambda x: x[1], reverse=True)
 sorted_songs_top10 = sorted(songs_top10.items(), key=lambda x: x[1], reverse=True)
 sorted_songs_top1 = sorted(songs_top1.items(), key=lambda x: x[1], reverse=True)
-print(sorted_songs_top100[:5],'\n')
-print(sorted_songs_top10[:5], '\n')
-print(sorted_songs_top1[:5], '\n')
+#print(sorted_songs_top100[:5],'\n')
+#print(sorted_songs_top10[:5], '\n')
+#print(sorted_songs_top1[:5], '\n')
 
 
 # #### 5) Artist whose song always achieved a high rank on the list.
@@ -351,26 +359,20 @@ for artist, songs in artist_songs_dict.items():
         ranks.append(minRank)
     artist_average_rank[artist] = sum(ranks)/len(ranks)
 sorted_songs_count = sorted(artist_average_rank.items(), key=lambda x: x[1])
-print(sorted_songs_count[:5])
+#print(sorted_songs_count[:5])
 
 
 # #### 6) Song appears/gaps in most years
 
 songs_appears = {a:len(b) for a,b in songs_years_ranks.items()}
 sorted_songs_appears = sorted(songs_appears.items(), key=lambda x: x[1], reverse=True)
-print("Songs that shows in the billboard in most years")
-print(sorted_songs_appears[:5])
+#print("Songs that shows in the billboard in most years")
+#print(sorted_songs_appears[:5])
 
 songs_years = {a:sorted(b)[len(b) - 1] - sorted(b)[0] for a,b in songs_years_ranks.items()}
 sorted_songs_years = sorted(songs_years.items(), key=lambda x: x[1], reverse=True)
-print("Songs that covers most years")
-print(sorted_songs_years[:5])
-
-
-songs_years_ranks["Rockin' Around The Christmas Tree by Brenda Lee"]
-
-
-songs_years_ranks['All I Want For Christmas Is You by Mariah Carey']
+#print("Songs that covers most years")
+#print(sorted_songs_years[:5])
 
 d = songs_years_ranks["Rockin' Around The Christmas Tree by Brenda Lee"]
 subject = ['(1960)', '(1960)', '(1960)', '(1961)', '(1961)','(1961)', '(1961)','(1962)', '(1962)', '(1962)', '(1962)','(2014)', '(2015)', '(2016)', 
@@ -378,34 +380,42 @@ subject = ['(1960)', '(1960)', '(1960)', '(1961)', '(1961)','(1961)', '(1961)','
            '(2019)', '(2019)', '(2019)', '(2020)']
 score = []
 for k,v in d.items():
-    #subject += [str(k)]*len(v)
     score += v
 
+def song_rank_plotly(score, subject):
+    data = [dict(
+        type = 'scatter',
+        x = score,
+        y = subject,
+        mode = 'markers',
+        transforms = [dict(
+            type = 'groupby',
+            groups = subject,
+        )]
+        )
+    ]
 
-data = [dict(
-  type = 'scatter',
-  x = score,
-  y = subject,
-  mode = 'markers',
-  transforms = [dict(
-    type = 'groupby',
-    groups = subject,
-  )]
-)]
-
-layout = dict(
-    title = "Rockin' Around The Christmas Tree by Brenda Lee",
-    plot_bgcolor='rgb(255, 255, 255)',
-    yaxis=dict(
-        title = "Year",
-        size=5,
-    ),
-    xaxis=dict(
-        title = 'RANK',
-        gridcolor='rgb(233, 233, 233)',
+    layout = dict(
+        title = "Rockin' Around The Christmas Tree by Brenda Lee",
+        plot_bgcolor='rgb(255, 255, 255)',
+        yaxis=dict(
+            title = "Year",
+            size=5,
+        ),
+        xaxis=dict(
+            title = 'RANK',
+            gridcolor='rgb(233, 233, 233)',
+        )
     )
-)
 
-fig_dict = dict(data=data, layout = layout)
-pio.show(fig_dict, validate=False)
+    fig_dict = dict(data=data, layout = layout)
+    pio.show(fig_dict, validate=False)
+
+
+def main():
+
+
+
+if __name__ == '__main__':
+	main()
 
