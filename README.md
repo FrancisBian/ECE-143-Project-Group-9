@@ -60,7 +60,7 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
  - 11_analysis_genre_sentiment_analysis.py - plots about genre and sentiment analyses
 
 ### Plot Snippet:
-
+![Recordit GIF](http://g.recordit.co/GiVH5fq5LX.gif)
 
 ---
 
