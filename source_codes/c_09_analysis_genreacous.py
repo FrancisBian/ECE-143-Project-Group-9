@@ -47,7 +47,7 @@ def get_acous_list(acous_name,df):
     return acous_list
 
 
-# In[17]:
+# In[57]:
 
 
 def get_acous_median(acous_name,df):
@@ -78,7 +78,7 @@ def get_genre_count(df,genre_name):
     return cnt
 
 
-# In[34]:
+# In[48]:
 
 
 def plot_acous_curve(acous_dict1, ref_val, yaxis_label, ref_legend, legend, ref = False):
@@ -118,6 +118,7 @@ def plot_acous_curve(acous_dict1, ref_val, yaxis_label, ref_legend, legend, ref 
 
     layout = go.Layout(
         plot_bgcolor='rgb(255, 255, 255)',
+        showlegend=True,
         yaxis=dict(
             title = yaxis_label,
             gridcolor='rgb(233, 233, 233)',
@@ -127,13 +128,16 @@ def plot_acous_curve(acous_dict1, ref_val, yaxis_label, ref_legend, legend, ref 
             gridcolor='rgb(233, 233, 233)',
         )
     )
-    data = [trace0,trace1]
+    if ref:
+        data = [trace0,trace1]
+    else:
+        data = [trace1]
     fig = go.Figure(data=data, layout=layout)
     plot(fig)
     
 
 
-# In[20]:
+# In[55]:
 
 
 def plot_bubble(genre_dict,acous_dict,genre_name,acous_name):
@@ -169,8 +173,8 @@ def plot_bubble(genre_dict,acous_dict,genre_name,acous_name):
         gridcolor='white',
         gridwidth=2,
     ),
-        paper_bgcolor='rgb(243, 243, 243)',
-        plot_bgcolor='rgb(243, 243, 243)',
+        paper_bgcolor='rgb(233, 233, 233)',
+        plot_bgcolor='rgb(233, 233, 233)',
         showlegend=True,
         legend={'bordercolor':'rgb(57, 119, 175)'}
 )
@@ -180,7 +184,7 @@ def plot_bubble(genre_dict,acous_dict,genre_name,acous_name):
     #fig.show()
 
 
-# In[35]:
+# In[58]:
 
 
 
@@ -192,21 +196,24 @@ def main():
     valence_dict={}
     loudness_dict={}
     unique_words_dict={}
+    sentiment_dict={}
     
     for year in range(1960, 2020):
         df = pd.read_csv('../data/combined_dataset/lyrics&features_{}.csv'.format(year))        
         #speechiness_dict[year] = get_acous_list('speechiness',df)
         #acousticness_dict[year] = get_acous_list('acousticness',df)
-        valence_dict[year]=get_acous_list('valence',df)
+        acousticness_dict[year] = get_acous_median('acousticness',df)
+        #valence_dict[year]=get_acous_list('valence',df)
+        sentiment_dict[year]=get_acous_list('sentiment',df)
         #loudness_dict[year]=get_acous_list('loudness',df)
         #unique_words_dict[year]=get_unique_words(df)
-        #genre_dict[year]=get_genre_count(df,"blues")
+        genre_dict[year]=get_genre_count(df,"blues")
         
     #plot_acous_curve(speechiness_dict,0.05,'speechiness') 
-    plot_acous_curve(valence_dict,0.6,'song valence','reference line','average valence',ref=True) 
+    #plot_acous_curve(unique_words_dict,80,'Unique Word Counts','80 Words','Average Unique Word Counts',ref=True) 
     #plot_acous_curve(unique_words_dict,70,'unique words')
 
-    #plot_bubble(genre_dict,acousticness_dict,"Blues","Acousticness")
+    plot_bubble(genre_dict,acousticness_dict,"Blues","Acousticness")
 
     
 if __name__ == '__main__':
