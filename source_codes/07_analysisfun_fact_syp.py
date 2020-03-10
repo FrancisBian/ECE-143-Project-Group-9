@@ -15,17 +15,13 @@ def extract(title, artist, rank, dict):
 def traverse_dataset():
     yearly_feature = {}
     for year in range(1960, 2021):
-        df = pd.read_csv('/Users/shenyuepeng/Desktop/ece143/ece143project-master/ece143project/data/combined_dataset/lyrics&features_{}.csv'.format(year))
+        df = pd.read_csv('/data/combined_dataset/lyrics&features_{}.csv'.format(year))
         yearly_feature[year] = {}
         extract(df['title'], df['artists'], df['rank'], yearly_feature[year])
     return yearly_feature
 
 res = traverse_dataset()
 
-# dataframe = pd.DataFrame(res)
-
-# dataframe.to_csv("test.csv",index=True,sep=',')
-# print("success")
 
 eachsong = {}
 for year in res:
@@ -35,7 +31,6 @@ for year in res:
             eachsong[temp] = eval(res[year][song]['rank'])[::-1]
         else:
             eachsong[temp] = eachsong[temp] + eval(res[year][song]['rank'])[::-1]
-print(eachsong)
 
 cnt_two = {}
 for song in eachsong:
