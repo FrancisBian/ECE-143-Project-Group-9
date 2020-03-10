@@ -16,7 +16,7 @@ def statgenre(genre_of_year, genre_dict):
 def traverse_dataset():
     yearly_genre = {}
     for year in range(1960, 2021):
-        df = pd.read_csv('/Users/shenyuepeng/Desktop/ece143/ece143project-master/combined_dataset/lyrics&features_{}.csv'.format(year))
+        df = pd.read_csv('/data/combined_dataset/lyrics&features_{}.csv'.format(year))
         yearly_genre[year] = {}
         statgenre(df['artist_genres'], yearly_genre[year])
     return yearly_genre
