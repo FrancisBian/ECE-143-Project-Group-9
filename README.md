@@ -71,7 +71,7 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 ## Contributors
 | <a href="https://github.com/FrancisBian" target="_blank">**Yucheng Bian**</a> | <a href="https://github.com/Eva-SiyiW" target="_blank">**Siyi Wang**</a> | <a href="https://github.com/ShYuPe" target="_blank">**Yuepeng Shen**</a> | <a href="https://github.com/iocak28" target="_blank">**Ismail Ocak**</a> |
 | :---: |:---:| :---:| :---:|
-| [![Yucheng Bian](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](https://github.com/FrancisBian)    | [![Siyi Wang](https://avatars1.githubusercontent.com/u/55155879?s=400&v=4)](https://github.com/Eva-SiyiW) | [![Yuepeng Shen](https://avatars1.githubusercontent.com/u/28599459?s=400&v=4)](https://github.com/ShYuPe)  | [![Ismail Ocak](https://avatars0.githubusercontent.com/u/14804342?s=400&v=4)](https://github.com/iocak2)    |
+| [![Yucheng Bian](https://avatars3.githubusercontent.com/u/26937986?s=400&v=4)](https://github.com/FrancisBian)    | [![Siyi Wang](https://avatars1.githubusercontent.com/u/55155879?s=400&v=4)](https://github.com/Eva-SiyiW) | [![Yuepeng Shen](https://avatars1.githubusercontent.com/u/28599459?s=400&v=4)](https://github.com/ShYuPe)  | [![Ismail Ocak](https://avatars0.githubusercontent.com/u/14804342?s=400&v=4)](https://github.com/iocak2)    |
 | <a href="https://github.com/FrancisBian" target="_blank">`github.com/FrancisBian`</a> | <a href="https://github.com/Eva-SiyiW" target="_blank">`github.com/Eva-SiyiW`</a> | <a href="https://github.com/ShYuPe" target="_blank">`github.com/ShYuPe`</a> | <a href="https://github.com/iocak28" target="_blank">`github.com/iocak28`</a> |
 
 ---
