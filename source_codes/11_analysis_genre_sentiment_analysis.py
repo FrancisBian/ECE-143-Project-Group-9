@@ -12,10 +12,9 @@ import nltk
 from newspaper import Article
 
 # Parameters
-git_path = 'C:/Users/iocak/OneDrive/Masaüstü/git/ece143project/'
-credentials_path = "C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/credentials.txt"
-hot_list_path = 'data/newVersionOfLyrics/'
-combined_path = 'data/combined_dataset/'
+git_path = os.getcwd() 
+hot_list_path = '/data/newVersionOfLyrics/'
+combined_path = '/data/combined_dataset/'
 
 # read data
 file_names = os.listdir(git_path + combined_path)
@@ -186,73 +185,6 @@ plt.plot(trial_2['date'], trial_2['sentiment'])
 #### Sentiment Analysis Plotly
 ####################
 
-#### Define functions
-import os
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-#import wordcloud
-from nltk.corpus import stopwords
-from  plotly.offline import plot
-import plotly.graph_objs as go
-
-def get_sentiment_list(df):
-    """
-    find the median of yearly speechiness
-    df: input dataframe for one year
-    """
-    assert isinstance(df,pd.DataFrame)
-    ac_list= [df.loc[i, 'sentiment'] for i in range(len(df)) if np.isnan(df.loc[i, 'sentiment'])==0 and df.loc[i, 'valid']==1]
-    return ac_list# return the median of yearly-speechiness
-
-def plot_acous_curve(acous_dict1,basic_line1,curve_name):
-    """
-    plot the yearly duration seconds
-    input:duration_dict
-    """
-    assert isinstance(acous_dict1,dict)
-    trace0 = go.Scatter(
-    x=[k for k,v in acous_dict1.items() if k != 2020],
-    y=[basic_line1 for k,v in acous_dict1.items() if k != 2020],
-    name='Reference',
-    line=dict(
-        color = 'rgb(245, 154,145)',
-        width = 3
-    )
-)
-
-    trace1 = go.Scatter(
-    x=[k for k,v in acous_dict1.items() if k != 2020],
-    #y=[sum(v)/len(v) for k,v in acous_dict1.items() if k != 2020],
-        y=[sorted(v)[len(v)//2] for k,v in acous_dict1.items() if k != 2020],
-    mode='markers',
-    name='average '+curve_name,
-    error_y=dict(
-        type='data',
-        array = [np.std(v) for k,v in acous_dict1.items() if k != 2020],
-        thickness=2,
-        width=2,
-        color='rgb(57, 119, 175)',
-    ),
-    marker=dict(color='darkblue',size=10)
-)
-
-    layout = go.Layout(
-    title = curve_name+' trend',
-    plot_bgcolor='rgb(255, 255, 255)',
-    yaxis=dict(
-        title ='song '+curve_name,
-        gridcolor='rgb(233, 233, 233)',
-    ),
-    xaxis=dict(
-        title = 'year',
-        gridcolor='rgb(233, 233, 233)',
-    )
-)
-    data = [trace0, trace1]
-    fig = go.Figure(data=data, layout=layout)
-    plot(fig)
-
 
 ## Call functions and plot sentiment analysis
 sentiment_dict={}
@@ -261,8 +193,6 @@ for year in range(1960, 2020):
         df = pd.read_csv(git_path + '/data/combined_dataset/lyrics&features_{}.csv'.format(year))        
         sentiment_dict[year] = get_sentiment_list(df)
         print(year)
-
-        
 
 plot_acous_curve(sentiment_dict, 0.115, 'sentiment')
 

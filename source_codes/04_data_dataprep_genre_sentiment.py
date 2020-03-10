@@ -11,22 +11,15 @@ from textblob import TextBlob
 import nltk
 from newspaper import Article
 
-# read spotipy credentials (a txt file of clientid and secretid)
-# refer here if you have problems https://medium.com/@RareLoot/extracting-spotify-data-on-your-favourite-artist-via-python-d58bc92a4330
-
 # Parameters
-git_path = 'C:/Users/iocak/OneDrive/Masaüstü/git/ece143project/'
-credentials_path = "C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/credentials.txt"
-hot_list_path = 'data/newVersionOfLyrics/'
-combined_path = 'data/combined_dataset/'
+git_path = os.getcwd() 
+hot_list_path = '/data/newVersionOfLyrics/'
+combined_path = '/data/combined_dataset/'
 
-credentials = pd.read_csv(credentials_path)
 hotlist_files = os.listdir(git_path + hot_list_path)
 hotlist_files = [i for i in hotlist_files if '.csv' in i]
 
-
 # read combined data
-
 file_names = os.listdir(git_path + combined_path)
 
 combined_df = pd.DataFrame()
@@ -38,13 +31,11 @@ for i in file_names:
             
             print(i)
     
-    
 combined_df.drop(columns = ['Unnamed: 0', 'Unnamed: 0.1'], inplace = True)
 combined_df = combined_df.reset_index(drop = True)
 
 # Genre Analysis
 all_genres = list(combined_df['artist_genres'])
-
 all_genres = [i.strip("[]").replace("'", "").replace(" ", "").split(',') for i in all_genres if not isinstance(i, float)]
 
 all_genres_unique = []
@@ -97,21 +88,19 @@ all_genres_unique.loc[all_genres_unique['original_genre'].str.contains('indie'),
 all_genres_unique.loc[all_genres_unique['original_genre'].str.contains('adultstandards'), 'adult_standards'] = 1
 
 all_genres_unique['genre_count'] = all_genres_unique[list(all_genres_unique.columns[1:])].sum(axis = 1)
-
 all_genres_unique.loc[all_genres_unique['genre_count'] == 0, 'unclassified'] = 1
 
 # fix nans
 combined_df.loc[combined_df['artist_genres'] == '[]', 'artist_genres'] = '[empty]'
 combined_df.loc[combined_df['artist_genres'].isnull(), 'artist_genres'] = '[nan]'
 
-# loop on main data frame to classify
+# loop on main data frame to classify artist genres
 combined_df_genres = pd.DataFrame(columns = list(all_genres_unique.columns[1:][:-1]))
 
 for i in range(len(combined_df)):
     temp_genres = pd.DataFrame(dict(zip(list(all_genres_unique.columns[1:][:-1]), [0 for i in range(len(all_genres_unique.columns[1:][:-1]))])), index = [0])
     temp_genre_list = combined_df['artist_genres'][i].strip("[]").replace("'", "").replace(" ", "").split(',')
     for j in temp_genre_list:
-        #all_genres_unique[all_genres_unique['original_genre'] == j][all_genres_unique.columns[1:][:-1]]
         if len(all_genres_unique[all_genres_unique['original_genre'] == j][all_genres_unique.columns[1:][:-1]]) > 0:
             temp_genres = np.add(temp_genres, all_genres_unique[all_genres_unique['original_genre'] == j][all_genres_unique.columns[1:][:-1]])
     temp_genres = pd.DataFrame(np.where(temp_genres > 0, 1, 0))
@@ -121,32 +110,21 @@ for i in range(len(combined_df)):
     
 combined_df_genres = combined_df_genres.reset_index(drop = True)
 
-# If an artists one genre is unclassified and rest is OK dont count it unclassified
+# If an artists one genre is unclassified and rest is OK dont count it as unclassified
 combined_df_genres.loc[combined_df_genres[combined_df_genres.columns[:-1]].sum(axis = 1) > 0, 'unclassified'] = 0
 
 combined_df_genres.sum() # looks good, low number of unclassified
 
-# merge main df and genres
-    
+# merge main df and genres    
 combined_df = pd.concat([combined_df, combined_df_genres], axis = 1)
 
-# save the final table (too large, cannot  upload to github)
-#combined_df.to_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
-#combined_df = pd.read_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
-
-
-# sentiment analysis data
-
-#combined_df['sentiment'] = combined_df['lyrics'].apply(lambda x: TextBlob(x).sentiment.polarity)
+# create sentiment analysis columns
 sid = SentimentIntensityAnalyzer()
 
 combined_df['sentiment'] = 0
 combined_df.loc[combined_df['valid'] == 1, 'sentiment'] = combined_df.loc[combined_df['valid'] == 1]['lyrics'].apply(lambda x: -1 * sid.polarity_scores(x)['neg'] + sid.polarity_scores(x)['pos'])
 
-#combined_df.to_parquet('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 143/Project/combined_data_with_genres_v2.parquet')
-
 # attach new columns to combined dataset
-
 filter_columns = ['artists', 'title', 'date',
        'classical', 'electronic_dance_disco', 'funk_soul', 'hip_hop', 'jazz',
        'latin', 'other', 'pop', 'rnb', 'reggae', 'rock', 'world', 'country',
