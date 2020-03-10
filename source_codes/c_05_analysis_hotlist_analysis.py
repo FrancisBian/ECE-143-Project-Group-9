@@ -17,8 +17,8 @@ from  plotly.offline import plot
 import plotly.graph_objs as go
 import plotly.io as pio
 
-import analysis_artist_popularity
-from analysis_artist_popularity import *
+import c_09_analysis_genreacous
+from c_09_analysis_genreacous import *
 
 
 csv.field_size_limit(sys.maxsize)
@@ -255,11 +255,11 @@ layout = go.Layout(
     )
 )
 
-'''
 
 data = [trace0, trace1]
 fig = go.Figure(data=data, layout=layout)
 plot(fig)
+'''
 
 def plotExpectancy(yearly_average_occ):
     plt.title("Average expectancy of each song in the billboard")
@@ -411,11 +411,11 @@ def song_rank_plotly(score, subject):
     fig_dict = dict(data=data, layout = layout)
     pio.show(fig_dict, validate=False)
 
-
+'''
 def main():
-
+    plot_acous_curve(yearly_length_dict, 200, 'Lyric Length[words]', '200 Words', 'Lyric Length', ref = True)
 
 
 if __name__ == '__main__':
 	main()
-
+'''

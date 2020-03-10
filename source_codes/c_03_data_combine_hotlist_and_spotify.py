@@ -1,6 +1,3 @@
-# combine hotlist and spotify data
-
-# import libraries
 import sys
 import csv
 from langdetect import detect
@@ -21,11 +18,10 @@ from os import path
 ## Here I take songs of 1960 as an example
 ### Let's combine the two lists based on hotlist_100 list's id. Set features to null if not found in spotify list
 ### I kept the title of songs from both lists. That is because the title from spotify seems to be more accurate, while the title from hotlist seems to be easier for searching
-hotlist_csv = pd.read_csv('../newVersionOfLyrics/lyricsHotListTopNew_{}.csv'.format(1960))
-spotify_csv = pd.read_csv('../spotify_features_csvs/lyricsHotListTopNew_{}.csv'.format(1960))
+hotlist_csv = pd.read_csv('../data/newVersionOfLyrics/lyricsHotListTopNew_{}.csv'.format(1960))
+spotify_csv = pd.read_csv('../data/spotify_features_csvs/lyricsHotListTopNew_{}.csv'.format(1960))
 combined_csv = pd.merge(hotlist_csv, spotify_csv, how='left', on='Unnamed: 0')
 
-combined_csv
 
 ### After we do extraction of the lyrics
 # For now, I skip the songs whose lyrics is not English or length is smaller than 200 characters
@@ -60,9 +56,6 @@ def extract_lyrics(combined_csv):
 combined_csv.insert(1, 'valid', 0)
 extract_lyrics(combined_csv)
 
-combined_csv
-
-combined_csv.to_csv('../combined_dataset/lyrics&features_{}.csv'.format(1960))
 
 ## Let's combine all the dataset we have and save to the directory
 
@@ -74,6 +67,7 @@ for year in range(1960, 2021):
         spotify_csv = pd.read_csv('../spotify_features_csvs/lyricsHotListTopNew_{}.csv'.format(year))
         combined_csv = pd.merge(hotlist_csv, spotify_csv, how='left', on='Unnamed: 0')
     
+    combined_csv.insert(1, 'valid', 0)
     extract_lyrics(combined_csv)
     combined_csv.to_csv('../combined_dataset/lyrics&features_{}.csv'.format(year)) 
 
