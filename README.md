@@ -38,6 +38,11 @@ genius = lyricsgenius.Genius("Your_ID_goes_here")
 #Connect to Spotify API
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
+#setup nltk library
+import nltk
+nltk.download('wordnet')
+nltk.download('stopwords')
 ```
 
 ---
@@ -45,19 +50,19 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 ## Codes:
 
 ### Data Extraction and Preparation:
- - 01_data_data_extract.py - Get Billboard Hot 100 and Lyrics Genius Data
- - 02_data_spotify_song_features.py - Get Spotify song features using Billboard hotlist
- - 03_data_combine_hotlist_and_spotify.py - Combine Billboard and Spotify data
- - 04_data_dataprep_genre_sentiment.py - Extract genres, create genre mapping, create sentiment feature
+ - c_01_data_data_extract.py : Get Billboard Hot 100 and Lyrics Genius Data
+ - c_02_data_spotify_song_features.py : Get Spotify song features using Billboard hotlist
+ - c_03_data_combine_hotlist_and_spotify.py : Combine Billboard and Spotify data
+ - c_04_data_dataprep_genre_sentiment.py : Extract genres, create genre mapping, create sentiment feature
 
 ### Analysis:
- - 05_analysis_hotlist_analysis.py
- - 06_analysis_artist_popularity.py
- - 07_analysisfun_fact_syp.py
- - 08_analysis_get_top_genre.py
- - 09_analysis_genre&acous.py
- - 10_analysis_generation_wordcloud.py
- - 11_analysis_genre_sentiment_analysis.py - plots about genre and sentiment analyses
+ - c_05_analysis_hotlist_analysis.py : Analysis on our raw data, understanding the data
+ - c_06_analysis_artist_popularity.py : Analysis of artist popularities
+ - c_07_analysisfun_fact_syp.py : Some fun facts about the dataset
+ - c_08_analysis_get_top_genre.py : A basic analysis on genres
+ - c_09_analysis_genre&acous.py : Functions to plot song features
+ - c_10_analysis_generation_wordcloud.py : Wordclout plots for different decades
+ - c_11_analysis_genre_sentiment_analysis.py : Plots about genres in years-decades
 
 ### Plot Snippet:
 ![Recordit GIF](http://g.recordit.co/GiVH5fq5LX.gif)
