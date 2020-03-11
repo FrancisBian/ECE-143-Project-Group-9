@@ -27,6 +27,7 @@ stop_words = set(stopwords.words('english'))
 additional_word = set(['im', 'get', 'say', 'go', 'dont', 'know'])
 with open('../banned_words_list.txt', 'r') as f:
     banned_word = [line.strip() for line in f]
+#Create the banned words list
 stop_words = stop_words.union(additional_word).union(banned_word)
 
 # # For the hot100 dataset
@@ -53,6 +54,11 @@ stop_words = stop_words.union(additional_word).union(banned_word)
 
 # Extract the bag of words for an entire year. Then we could do TF-IDF or text-based analysis.
 def get_yearly_word_list(df):
+    '''
+    Get the yearly words list of each songs' lyric
+    '''
+    assert isinstance(df, pd.DataFrame)
+
     yearly_word_list = []
     for i in range(len(df)):
         li = df.loc[i,'words'].replace('\'', '')
@@ -63,11 +69,23 @@ def get_yearly_word_list(df):
 
 
 def get_yearly_length(df, exclude=3):
+    '''
+    Get the yearly length each songs' lyric
+    '''
+    assert isinstance(df, pd.DataFrame)
+    assert isinstance(exclude, int) and exclude >= 0
+
     sorted_valid_length = sorted([df.loc[i, 'lyrics_length'] for i in range(len(df)) if df.loc[i, 'lyrics_length'] != 0])
     sorted_valid_length = sorted_valid_length[exclude: len(sorted_valid_length) - exclude]
     return sorted_valid_length
 
 def get_yearly_duration(df,exclude=2):
+    '''
+    Get the yearly duration of each songs
+    '''
+    assert isinstance(df, pd.DataFrame)
+    assert isinstance(exclude, int) and exclude >= 0
+    
     sorted_valid_du = sorted([df.loc[i, 'duration_seconds'] for i in range(len(df)) if not pd.isna(df.loc[i, 'duration_seconds'])])
     sorted_valid_du = sorted_valid_du[exclude: len(sorted_valid_du) - exclude]
     return sorted_valid_du
@@ -75,10 +93,20 @@ def get_yearly_duration(df,exclude=2):
 
 # Get average occurrence of songs in this year's billboard 
 def get_average_occ(df):
+    '''
+    Get the yearly occurrence each songs in billboard
+    '''
+    assert isinstance(df, pd.DataFrame)
+   
     return sum([df.loc[i, 'cnt'] for i in range(len(df))])/len(df)
 
 # Get average highest rank
 def get_average_highest_rank(df):
+    '''
+    Get the yearly average highest rank of each songs
+    '''
+    assert isinstance(df, pd.DataFrame)
+    
     rank_list = []
     for i in range(len(df)):
         rk = df.loc[i,'rank'].replace('\'', '')
@@ -90,12 +118,22 @@ def get_average_highest_rank(df):
 
 # Get the artists of this year
 def get_yearly_artists(df):
+    '''
+    Get the yearly number of artists show up in Billboard
+    '''
+    assert isinstance(df, pd.DataFrame)
+
     artists = set()
     for i in range(len(df)):
         artists.add(df.loc[i,'artists'])
     return artists
 
 def update_songs(df, year, songs_years_ranks):
+    '''
+    Get the song's dictionary
+    '''
+    assert isinstance(df, pd.DataFrame)
+
     for i in range(len(df)):
         title = df.loc[i, 'title']
         key = title + " by " + df.loc[i, 'artists']
@@ -158,6 +196,9 @@ for year in range(1960, 2021):
     #yearly_released_month[year] = get_released_month(df)
     
 def plotAverageLength():
+    '''
+    plot the average length of each song
+    '''
     plt.title("Average length")
     plt.plot([sum(v)/len(v) for k,v in yearly_length_dict.items()])
     positions = [i for i in range(0, 61, 10)]
@@ -165,103 +206,12 @@ def plotAverageLength():
     plt.xticks(positions, labels)
     plt.locator_params(axis='x', nbins=8)
 
-'''
-trace0 = go.Scatter(
-    x=[k for k,v in yearly_length_dict.items() if k != 2020],
-    y=[200 for k,v in yearly_length_dict.items() if k != 2020],
-    name='200 Words',
-    line=dict(
-        color = 'rgb(245, 154,145)',
-        width = 5
-    )
-)
-
-trace1 = go.Scatter(
-    x=[k for k,v in yearly_length_dict.items() if k != 2020],
-    y=[sum(v)/len(v) for k,v in yearly_length_dict.items() if k != 2020],
-    
-    mode='markers',
-    name='Lyrics Length',
-    error_y=dict(
-        type='data',
-        array = [np.std(v) for k,v in yearly_length_dict.items() if k != 2020],
-        thickness=2,
-        width=4,
-        color='rgb(57, 119, 175)',
-    ),
-    marker=dict(
-        color='rgb(57, 119, 175)',
-        size=7
-    )
-)
-
-layout = go.Layout(
-    title = 'Average Lyric Length in Words',
-    plot_bgcolor='rgb(255, 255, 255)',
-    yaxis=dict(
-        title = "Lyric length [words]",
-        gridcolor='rgb(233, 233, 233)',
-    ),
-    xaxis=dict(
-        title = 'year',
-        gridcolor='rgb(233, 233, 233)',
-    )
-)
-    
-data = [trace0, trace1]
-fig = go.Figure(data=data, layout=layout)
-plot(fig)
-
-
-trace0 = go.Scatter(
-    x=[k for k,v in yearly_duration_dict.items() if k != 2020],
-    y=[200 for k,v in yearly_duration_dict.items() if k != 2020],
-    name='200 seconds',
-    line=dict(
-        color = 'rgb(245, 154,145)',
-        width = 5
-    )
-)
-
-trace1 = go.Scatter(
-    x=[k for k,v in yearly_duration_dict.items() if k != 2020],
-    y=[sum(v)/len(v) for k,v in yearly_duration_dict.items() if k != 2020],
-    
-    mode='markers',
-    name='Song Duration',
-    error_y=dict(
-        type='data',
-        array = [np.std(v) for k,v in yearly_duration_dict.items() if k != 2020],
-        thickness=2,
-        width=4,
-        color='rgb(57, 119, 175)',
-    ),
-    marker=dict(
-        color='rgb(57, 119, 175)',
-        size=7
-    )
-)
-
-layout = go.Layout(
-    #title = 'Average Lyric Length',
-    plot_bgcolor='rgb(255, 255, 255)',
-    yaxis=dict(
-        title = "Song Duration [seconds]",
-        gridcolor='rgb(233, 233, 233)',
-    ),
-    xaxis=dict(
-        title = 'year',
-        gridcolor='rgb(233, 233, 233)',
-    )
-)
-
-
-data = [trace0, trace1]
-fig = go.Figure(data=data, layout=layout)
-plot(fig)
-'''
-
 def plotExpectancy(yearly_average_occ):
+    '''
+    plot
+    '''
+    assert isinstance(yearly_average_occ, dict)
+
     plt.title("Average expectancy of each song in the billboard")
     plt.plot([v for k,v in yearly_average_occ.items()])
     positions = [i for i in range(0, 61, 10)]
@@ -270,6 +220,11 @@ def plotExpectancy(yearly_average_occ):
     plt.locator_params(axis='x', nbins=8)
 
 def plotAvgNumSongs(yearly_songs_dict):
+    '''
+    plot
+    '''
+    assert isinstance(yearly_songs_dict, dict)
+
     plt.title("Average number of songs on the billboard HOT 100")
     plt.plot([len(s) for y,s in yearly_songs_dict.items()])
     positions = [i for i in range(0, 61, 10)]
@@ -279,6 +234,11 @@ def plotAvgNumSongs(yearly_songs_dict):
 
 
 def plotAvgHighestRank(yearly_average_highest_rank):
+    '''
+    plot
+    '''
+    assert isinstance(yearly_average_highest_rank, dict)
+
     plt.title("Average highest rank of each song in the billboard")
     plt.plot([v for k,v in yearly_average_highest_rank.items()])
     positions = [i for i in range(0, 61, 10)]
@@ -288,6 +248,11 @@ def plotAvgHighestRank(yearly_average_highest_rank):
 
 
 def plotNumArtistsYearly(yearly_artists_dict):
+    '''
+    plot
+    '''
+    assert isinstance(yearly_artists_dict, dict)
+
     plt.title("Number of artists showing in the billboard each year")
     plt.plot([len(v) for k,v in yearly_artists_dict.items()])
     positions = [i for i in range(0, 61, 10)]
@@ -296,6 +261,9 @@ def plotNumArtistsYearly(yearly_artists_dict):
     plt.locator_params(axis='x', nbins=8)
 
 def tfldf_analysis():
+    '''
+    TF-IDF Analysis
+    '''
     vectorizer = TfidfVectorizer()
     vectors = vectorizer.fit_transform([' '.join(yearly_words_dict[year]) for year in range(1960, 2021)])
     feature_names = vectorizer.get_feature_names()
