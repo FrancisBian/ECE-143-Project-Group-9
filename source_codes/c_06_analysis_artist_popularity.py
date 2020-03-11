@@ -12,7 +12,7 @@ import wordcloud
 from nltk.corpus import stopwords
 
 
-# In[3]:
+# In[2]:
 
 
 def get_top4_artist(start,end):
@@ -22,7 +22,7 @@ def get_top4_artist(start,end):
     assert isinstance(start,int) and isinstance(end,int)
     at_pl_dict={}
     for year in range(start,end+1):
-        df = pd.read_csv('data/combined_dataset/lyrics&features_{}.csv'.format(year)) 
+        df = pd.read_csv('../data/combined_dataset/lyrics&features_{}.csv'.format(year)) 
         assert isinstance(df,pd.DataFrame)
         for i in range(len(df)):
             assert isinstance(df.loc[i, 'artists'],str)
@@ -37,7 +37,7 @@ def get_top4_artist(start,end):
     return top4_artist
 
 
-# In[4]:
+# In[14]:
 
 
 def get_popularity_artist(artist_list):
@@ -48,7 +48,7 @@ def get_popularity_artist(artist_list):
     year_dict={}
     for year in range(1960, 2020):
         popularity_list=[0 for i in range(len(artist_list))]
-        df = pd.read_csv('data/combined_dataset/lyrics&features_{}.csv'.format(year))   
+        df = pd.read_csv('../data/combined_dataset/lyrics&features_{}.csv'.format(year))   
         for index,art in enumerate(artist_list):
             a = df[df['artists']==art].index.tolist()
             for i in a:
@@ -56,10 +56,10 @@ def get_popularity_artist(artist_list):
                     popularity_list[index]+=df.loc[i, 'song_popularity']
         year_dict[year]=popularity_list
                     
-    return year_dict     
+    return year_dict 
 
 
-# In[5]:
+# In[15]:
 
 
 def plot_artist_popularity(year_dict,top4_artist_list,generation):
@@ -73,19 +73,26 @@ def plot_artist_popularity(year_dict,top4_artist_list,generation):
     assert isinstance(top4_artist_list,list)
     assert isinstance(generation,int)
     plt.figure()
-    plt.title("artist popularity - "+str(1960+generation*10)+"s")
+    plt.title("Artist Popularity - "+str(1960+generation*10)+"s")
+    voa=[]
     for i in range(len(top4_artist_list)):
-        plt.plot([k for k,v in year_dict.items()],[v[i] for k,v in year_dict.items()])
+        voa.append([])
+        for k,v in year_dict.items():
+            voa[i].append(v[i])
+    std_voa=[np.std(v) for v in voa]
+    avg_voa=[sum(v)/len(v) for v in voa]
+    for i in range(len(top4_artist_list)):
+        plt.plot([k for k,v in year_dict.items()],[(v[i]-avg_voa[i])/std_voa[i] for k,v in year_dict.items()])
            
-    plt.xlabel('year')
-    plt.ylabel('yearly popularity of artists')
+    plt.xlabel('Year')
+    plt.ylabel('Scaled Yearly Popularity')
     plt.ylim(ymin=0)
     #plt.grid(True)
     plt.legend(top4_artist_list)
     plt.savefig('ap'+str(1960+generation*10)+"s.jpg")
 
 
-# In[6]:
+# In[16]:
 
 
 def main():

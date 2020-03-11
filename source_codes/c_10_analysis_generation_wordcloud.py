@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[40]:
+# In[1]:
 
 
 import os
@@ -14,7 +14,7 @@ from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
 additional_word = set(['im', 'get', 'say', 'go', 'dont', 'know','make',
                        'oh','yeah','come','baby','want','cause','let','youre'])
-with open('banned_words_list.txt', 'r') as f:
+with open('../banned_words_list.txt', 'r') as f:
     banned_word = [line.strip() for line in f]
 
 #final stop_words set contains banned_word and additional words
@@ -27,21 +27,20 @@ def plot_wordcloud(generation_string,index):
     generation_string: a string containing all words in ten years
     """
     assert isinstance(generation_string,str)
-    font='myfont.ttf'
-    c =wordcloud.WordCloud(scale=2,width=400,height=300,font_path=font,collocations=False,background_color='white',
+    c =wordcloud.WordCloud(scale=2,width=400,height=300,collocations=False,background_color='white',
                            max_words = 1400,max_font_size = 95,random_state=int(index))
     c.generate(generation_string) 
     c.to_file("wordcloud"+str(index+50)[-2:]+"s.png")
 
 
-# In[41]:
+# In[3]:
 
 
 def main():
     """
     extract the words from datasets and plot wordclouds
     """   
-    path="data/combined_dataset"  
+    path="../data/combined_dataset"  
     path_list=os.listdir(path)
     path_list.sort()  
     for index,filename in enumerate(path_list):
@@ -65,4 +64,10 @@ def main():
             
 if __name__ == '__main__':
 	main()
+
+
+# In[ ]:
+
+
+
 
