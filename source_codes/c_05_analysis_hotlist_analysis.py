@@ -8,7 +8,6 @@ from collections import defaultdict
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import nltk
 nltk.download('wordnet')
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -16,12 +15,13 @@ lem = WordNetLemmatizer()
 from  plotly.offline import plot
 import plotly.graph_objs as go
 import plotly.io as pio
+import os
 
 import c_09_analysis_genreacous
 from c_09_analysis_genreacous import *
 
 
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(999999)
 print(string.punctuation)
 stop_words = set(stopwords.words('english'))
 additional_word = set(['im', 'get', 'say', 'go', 'dont', 'know'])
