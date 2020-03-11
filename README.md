@@ -2,6 +2,31 @@
 
 # Analyzing Trends of Music Lyrics and Features Throughout the Decades
 
+## Problem
+Analyze the most popular songs of the last decades and understand how the songs change throughout the
+years in terms of genres, features, generations, lyrics, etc.
+
+## Summary
+The main goal of this project is to understand and analyze how the most popular songs change throughout
+the years. Starting from the 1960s, we focused on each year’s the most popular songs and try to answer
+questions such as:
+- How do the most frequent words in the songs change with decades?
+- How do popular genres change throughout the years?
+- Can we explain these changes by the sociopolitical status of the related era? How are these
+changes related to real life?
+
+The real-world application of this project is: it can help us understand the music trends and the changes in genres better. Also, it can provide some insights for other people who are in need to do feature extraction, model training, and recommendation systems in this field, etc.
+
+In conclusion, this project looks for relations between genres, intertextual connections, acoustic
+phenomena (track features), and the time.
+
+## Methodology
+> We created our dataset using Billboard, Lyrics Genius, and Spotify APIs. (More details in the next section.)
+
+> Cleaned the data, removed corrupted data-lyrics.
+
+> Conducted preliminary data analysis, recognised the data and explored some fun facts
+
 > analyzed the most popular songs of the last decades
 
 > understood how the songs change throughout the years in terms of genres, features, generations, lyrics, etc. 
@@ -19,6 +44,8 @@ We also analyzed lyrics and song characteristics. To build our dataset we used t
 - lyricsgenius
 	
 - spotipy
+
+Using the python packages we have built our dataset from the scratch. We first pulled the data for the Billboard Hot 100 list. Then we merged lyrics data using LyricsGenius API. Finally, we merged Spotify features to our main data using spotipy Python API.
 
 ---
 
@@ -69,7 +96,36 @@ nltk.download('stopwords')
 
 ---
 
-## Features
+## Required Packages:
+1- billboard
+2- pandas
+3- lyricsgenius
+4- numpy
+5- spotipy
+6- os
+7- re
+8- difflib
+9- sys
+10- csv
+11- langdetect
+12- nltk
+13- string
+14- collections
+15- matplotlib
+16- itertools
+17- vaderSentiment
+18- textblob
+19- newspaper
+20- sklearn
+21- plotly
+22- wordcloud
+23- math
+
+To install these packages, you can use pip install packages. For example,
+
+```javascript
+pip install pandas
+```
 
 ---
 
@@ -83,5 +139,5 @@ nltk.download('stopwords')
 
 ## Support
 Reach out to us at one of the following places!
-- email to 'y2bian@ucsd.edu'
-- email to 'iocak28@gmail.com'
+- email to 'y 2 b i a n at u c s d   e d u'
+- email to 'i o c a k 2 8 at g m a i l   c o m'
