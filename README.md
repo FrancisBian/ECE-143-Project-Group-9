@@ -63,6 +63,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 genius = lyricsgenius.Genius("Your_ID_goes_here")
 
 #Connect to Spotify API
+## You need to get your Spotify API clientid and password, details are in the source codes.
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
