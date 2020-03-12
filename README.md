@@ -55,7 +55,7 @@ Using the python packages we have built our dataset from the scratch. We first p
 $ pip3 install billboard.py
 ```
 
-```javascript
+```python
 import lyricsgenius
 from spotipy.oauth2 import SpotifyClientCredentials
 
