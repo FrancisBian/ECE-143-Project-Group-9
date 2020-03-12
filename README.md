@@ -76,20 +76,23 @@ nltk.download('stopwords')
 
 ## Codes:
 
+## Project Jupyter Notebook:
+- [Final_Plots.ipynb](../master/Final_Plots.ipynb) : A summary of the plots
+
 ### Data Extraction and Preparation:
  - [c_01_data_data_extract.py](../master/source_codes/c_01_data_data_extract.py) : Get Billboard Hot 100 and Lyrics Genius Data
- - c_02_data_spotify_song_features.py : Get Spotify song features using Billboard hotlist
- - c_03_data_combine_hotlist_and_spotify.py : Combine Billboard and Spotify data
- - c_04_data_dataprep_genre_sentiment.py : Extract genres, create genre mapping, create sentiment feature
+ - [c_02_data_spotify_song_features.py](../master/source_codes/c_02_data_spotify_song_features.py) : Get Spotify song features using Billboard hotlist
+ - [c_03_data_combine_hotlist_and_spotify.py](../master/source_codes/c_03_data_combine_hotlist_and_spotify.py) : Combine Billboard and Spotify data
+ - [c_04_data_dataprep_genre_sentiment.py](../master/source_codes/c_04_data_dataprep_genre_sentiment.py) : Extract genres, create genre mapping, create sentiment feature
 
 ### Analysis:
- - c_05_analysis_hotlist_analysis.py : Analysis on our raw data, understanding the data
- - c_06_analysis_artist_popularity.py : Analysis of artist popularities
- - c_07_analysisfun_fact_syp.py : Some fun facts about the dataset
- - c_08_analysis_get_top_genre.py : A basic analysis on genres
- - c_09_analysis_genre&acous.py : Functions to plot song features
- - c_10_analysis_generation_wordcloud.py : Wordclout plots for different decades
- - c_11_analysis_genre_sentiment_analysis.py : Plots about genres in years-decades
+ - [c_05_analysis_hotlist_analysis.py](../master/source_codes/c_05_analysis_hotlist_analysis.py) : Analysis on our raw data, understanding the data
+ - [c_06_analysis_artist_popularity.py](../master/source_codes/c_06_analysis_artist_popularity.py) : Analysis of artist popularities
+ - [c_07_analysisfun_fact_syp.py](../master/source_codes/c_07_analysisfun_fact_syp.py) : Some fun facts about the dataset
+ - [c_08_analysis_get_top_genre.py](../master/source_codes/c_08_analysis_get_top_genre.py) : A basic analysis on genres
+ - [c_09_analysis_genre&acous.py](../master/source_codes/c_09_analysis_genre.py) : Functions to plot song features
+ - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : Wordclout plots for different decades
+ - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : Plots about genres in years-decades
 
 ### Plot Snippet:
 ![Recordit GIF](http://g.recordit.co/GiVH5fq5LX.gif)
