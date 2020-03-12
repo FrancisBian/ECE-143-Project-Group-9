@@ -76,7 +76,7 @@ nltk.download('stopwords')
 
 ## Codes:
 
-## Project Jupyter Notebook:
+### Project Jupyter Notebook:
 - [Final_Plots.ipynb](../master/Final_Plots.ipynb) : A summary of the plots
 
 ### Data Extraction and Preparation:
@@ -90,7 +90,7 @@ nltk.download('stopwords')
  - [c_06_analysis_artist_popularity.py](../master/source_codes/c_06_analysis_artist_popularity.py) : Analysis of artist popularities
  - [c_07_analysisfun_fact_syp.py](../master/source_codes/c_07_analysisfun_fact_syp.py) : Some fun facts about the dataset
  - [c_08_analysis_get_top_genre.py](../master/source_codes/c_08_analysis_get_top_genre.py) : A basic analysis on genres
- - [c_09_analysis_genre&acous.py](../master/source_codes/c_09_analysis_genre.py) : Functions to plot song features
+ - [c_09_analysis_genreacous.py](../master/source_codes/c_09_analysis_genre.py) : Functions to plot song features
  - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : Wordclout plots for different decades
  - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : Plots about genres in years-decades
 
@@ -100,29 +100,29 @@ nltk.download('stopwords')
 ---
 
 ## Required Packages:
-1- billboard
-2- pandas
-3- lyricsgenius
-4- numpy
-5- spotipy
-6- os
-7- re
-8- difflib
-9- sys
-10- csv
-11- langdetect
-12- nltk
-13- string
-14- collections
-15- matplotlib
-16- itertools
-17- vaderSentiment
-18- textblob
-19- newspaper
-20- sklearn
-21- plotly
-22- wordcloud
-23- math
+> billboard
+> pandas
+> lyricsgenius
+> numpy
+> spotipy
+> os
+> re
+> difflib
+> sys
+> csv
+> langdetect
+> nltk
+> string
+> collections
+> matplotlib
+> itertools
+> vaderSentiment
+> textblob
+> newspaper
+> sklearn
+> plotly
+> wordcloud
+> math
 
 To install these packages, you can use pip install packages. For example,
 
