@@ -91,8 +91,8 @@ nltk.download('stopwords')
  - [c_07_analysisfun_fact_syp.py](../master/source_codes/c_07_analysisfun_fact_syp.py) : Some fun facts about the dataset
  - [c_08_analysis_get_top_genre.py](../master/source_codes/c_08_analysis_get_top_genre.py) : A basic analysis on genres
  - [c_09_analysis_genreacous.py](../master/source_codes/c_09_analysis_genreacous.py) : Functions to plot song features
- - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : Wordclout plots for different decades
- - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : Plots about genres in years-decades
+ - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : Wordcloud plots for different decades
+ - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : Plots about genres in years-decades, related plotting and data read functions
 
 ### Plot Snippet:
 ![Recordit GIF](http://g.recordit.co/GiVH5fq5LX.gif)
