@@ -101,27 +101,49 @@ nltk.download('stopwords')
 
 ## Required Packages:
 > billboard
+
 > pandas
+
 > lyricsgenius
+
 > numpy
+
 > spotipy
+
 > os
+
 > re
+
 > difflib
+
 > sys
+
 > csv
+
 > langdetect
+
 > nltk
+
 > string
+
 > collections
+
 > matplotlib
+
 > itertools
+
 > vaderSentiment
+
 > textblob
+
 > newspaper
+
 > sklearn
+
 > plotly
+
 > wordcloud
+
 > math
 
 ---
