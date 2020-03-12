@@ -27,6 +27,15 @@ combined_csv = pd.merge(hotlist_csv, spotify_csv, how='left', on='Unnamed: 0')
 # For now, I skip the songs whose lyrics is not English or length is smaller than 200 characters
 
 def extract_lyrics(combined_csv):
+    '''
+    Extract, process and edit the lyrics in our data. Take punctuation, determine the language etc:
+        Input:
+            combined_csv : Billboard hot list data, pandas dataframe
+        Output:
+            Changes the original table.
+    '''
+    assert isinstance(combined_csv, pd.core.frame.DataFrame)
+    
     combined_csv.insert(3, 'words', np.empty((len(combined_csv), 0)).tolist())
     combined_csv.insert(4, 'lyrics_length', [0]*len(combined_csv))
     for i in range(len(combined_csv)):
