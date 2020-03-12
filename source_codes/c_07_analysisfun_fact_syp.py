@@ -4,6 +4,11 @@ import pandas as pd
 yearly_song_list = {} # key: year, value: key:song  value: features
 
 def extract(title, artist, rank, dict):
+    ''' handle the extracted the data from combined dataset '''
+    assert isinstance(title, str)
+    assert isinstance(artist, str)
+    assert isinstance(rank, str)
+    assert isinstance(dict, str)
     l = len(title) 
     for i in range(l):
         dict[title[i]] = {}
@@ -13,6 +18,7 @@ def extract(title, artist, rank, dict):
 
                 
 def traverse_dataset():
+    ''' traverse the data from combined dataset '''
     yearly_feature = {}
     for year in range(1960, 2021):
         df = pd.read_csv('/data/combined_dataset/lyrics&features_{}.csv'.format(year))
@@ -21,9 +27,11 @@ def traverse_dataset():
     return yearly_feature
 
 res = traverse_dataset()
+# get the data
 
 
 eachsong = {}
+# get the rank of each song over 60 years
 for year in res:
     for song in res[year]:
         temp = song + " by " + res[year][song]['artist']
@@ -33,6 +41,7 @@ for year in res:
             eachsong[temp] = eachsong[temp] + eval(res[year][song]['rank'])[::-1]
 
 cnt_two = {}
+# merge the rank of all years 
 for song in eachsong:
     cnt = 0
     for rank in eachsong[song]:
@@ -45,11 +54,13 @@ for song in eachsong:
         continue
     cnt_two[song] = cnt
 ans = sorted(cnt_two, key=lambda x: cnt_two[x], reverse=True)[:10]
+# get top ten that reached top 2 but never touch top one
 print(ans)
 for i in ans:
     print(i, cnt_two[i])
 
 merge_two_years = {}
+# merge the rank of two years nearby
 for year in res:
     if not (year+2) in res:
         continue
@@ -76,6 +87,8 @@ for year in merge_two_years:
         if jump == 1 or hasone == 0:
             continue
         song_jump[song + " " + str(year)] = jump
+# get top thirty which jump most
+# consider all the year past
 ans_jump = sorted(song_jump, key=lambda x: song_jump[x], reverse=True)[:30]
 for i in ans_jump:
     print(i, song_jump[i])
@@ -99,6 +112,8 @@ for year in merge_two_years:
             continue
         song_jump[song + " " + str(year)] = jump
 ans_jump = sorted(song_jump, key=lambda x: song_jump[x], reverse=True)[:30]
+# get top thirty songs which jump most
+# consider just two years close to each other
 for i in ans_jump:
     print(i, song_jump[i])
     print(merge_two_years[int(i[-4:])][i[:-5]])
@@ -131,6 +146,7 @@ for year in years:
             continue
         song_drop[song + " " + str(year)] = drop
 ans_drop = sorted(song_drop, key=lambda x: song_drop[x], reverse=True)[:30]
+# get top thirty songs who drop most
 for i in ans_drop:
     print(i, song_drop[i])
     print(years[int(i[-4:])][i[:-5]])
