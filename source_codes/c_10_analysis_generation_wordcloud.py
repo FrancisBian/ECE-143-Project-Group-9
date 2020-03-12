@@ -14,7 +14,7 @@ from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
 additional_word = set(['im', 'get', 'say', 'go', 'dont', 'know','make',
                        'oh','yeah','come','baby','want','cause','let','youre'])
-with open('../banned_words_list.txt', 'r') as f:
+with open('../data/banned_words_list.txt', 'r') as f:
     banned_word = [line.strip() for line in f]
 
 #final stop_words set contains banned_word and additional words

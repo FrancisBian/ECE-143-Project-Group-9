@@ -25,7 +25,7 @@ csv.field_size_limit(999999)
 print(string.punctuation)
 stop_words = set(stopwords.words('english'))
 additional_word = set(['im', 'get', 'say', 'go', 'dont', 'know'])
-with open('../banned_words_list.txt', 'r') as f:
+with open('../data/banned_words_list.txt', 'r') as f:
     banned_word = [line.strip() for line in f]
 #Create the banned words list
 stop_words = stop_words.union(additional_word).union(banned_word)
