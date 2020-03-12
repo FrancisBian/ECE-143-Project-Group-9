@@ -90,7 +90,7 @@ nltk.download('stopwords')
  - [c_06_analysis_artist_popularity.py](../master/source_codes/c_06_analysis_artist_popularity.py) : Analysis of artist popularities
  - [c_07_analysisfun_fact_syp.py](../master/source_codes/c_07_analysisfun_fact_syp.py) : Some fun facts about the dataset
  - [c_08_analysis_get_top_genre.py](../master/source_codes/c_08_analysis_get_top_genre.py) : A basic analysis on genres
- - [c_09_analysis_genreacous.py](../master/source_codes/c_09_analysis_genre.py) : Functions to plot song features
+ - [c_09_analysis_genreacous.py](../master/source_codes/c_09_analysis_genreacous.py) : Functions to plot song features
  - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : Wordclout plots for different decades
  - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : Plots about genres in years-decades
 
@@ -123,6 +123,8 @@ nltk.download('stopwords')
 > plotly
 > wordcloud
 > math
+
+---
 
 To install these packages, you can use pip install packages. For example,
 
