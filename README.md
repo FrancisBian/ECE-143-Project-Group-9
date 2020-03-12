@@ -2,9 +2,13 @@
 
 # Analyzing Trends of Music Lyrics and Features Throughout the Decades
 
+---
+
 ## Problem
 Analyzing the most popular songs of the last decades and understanding how the songs change throughout the
 years in terms of genres, features, generations, lyrics, etc.
+
+---
 
 ## Summary
 The main goal of this project is to understand and analyze how the most popular songs change throughout
@@ -19,6 +23,8 @@ The real-world application of this project is: it can help us understand the mus
 
 In conclusion, this project looks for relations between genres, intertextual connections, acoustic
 phenomena (track features), and the time.
+
+---
 
 ## Methodology
 1. We created our dataset using Billboard, Lyrics Genius, and Spotify APIs. (More details in the next section.)
