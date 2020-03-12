@@ -27,11 +27,11 @@ phenomena (track features), and the time.
 
 > Conducted preliminary data analysis, recognised the data and explored some fun facts
 
-> analyzed the most popular songs of the last decades
+> Analyzed the most popular songs of the last decades
 
-> understood how the songs change throughout the years in terms of genres, features, generations, lyrics, etc. 
+> Understood how the songs change throughout the years in terms of genres, features, generations, lyrics, etc. 
 
-> found trends, changes, and interesting facts about the world's music taste in the last 60 years.
+> Found trends, changes, and interesting facts about the world's music taste in the last 60 years.
 
 ---
 
