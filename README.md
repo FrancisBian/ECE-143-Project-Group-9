@@ -21,17 +21,17 @@ In conclusion, this project looks for relations between genres, intertextual con
 phenomena (track features), and the time.
 
 ## Methodology
-> We created our dataset using Billboard, Lyrics Genius, and Spotify APIs. (More details in the next section.)
+1. We created our dataset using Billboard, Lyrics Genius, and Spotify APIs. (More details in the next section.)
 
-> Cleaned the data, removed corrupted data-lyrics.
+2. Cleaned the data, removed corrupted data-lyrics.
 
-> Conducted preliminary data analysis, recognised the data and explored some fun facts
+3. Conducted preliminary data analysis, recognised the data and explored some fun facts
 
-> Analyzed the most popular songs of the last decades
+4. Analyzed the most popular songs of the last decades
 
-> Understood how the songs change throughout the years in terms of genres, features, generations, lyrics, etc. 
+5. Understood how the songs change throughout the years in terms of genres, features, generations, lyrics, etc. 
 
-> Found trends, changes, and interesting facts about the world's music taste in the last 60 years.
+6. Found trends, changes, and interesting facts about the world's music taste in the last 60 years.
 
 ---
 
