@@ -3,7 +3,7 @@
 # Analyzing Trends of Music Lyrics and Features Throughout the Decades
 
 ## Problem
-Analyze the most popular songs of the last decades and understand how the songs change throughout the
+Analyzing the most popular songs of the last decades and understanding how the songs change throughout the
 years in terms of genres, features, generations, lyrics, etc.
 
 ## Summary
