@@ -117,7 +117,7 @@ nltk.download('stopwords')
  - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : **Plots about genres in years-decades, related plotting and data read functions**
  	- Data reading and genre plotting functions. The example use of this code can be found in our Jupyter notebook.
 
-## Data Structure:
+## File Structure:
 - **Our data files can be found [here](../master/data/), in the order they were created:**
 1. [newVersionOfLyrics](../master/data/newVersionOfLyrics):
 	- Created by: [c_01_data_data_extract.py](../master/source_codes/c_01_data_data_extract.py)
