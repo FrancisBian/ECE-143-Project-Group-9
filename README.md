@@ -122,13 +122,16 @@ nltk.download('stopwords')
 1. [newVersionOfLyrics](../master/data/newVersionOfLyrics):
 	- Created by: [c_01_data_data_extract.py](../master/source_codes/c_01_data_data_extract.py)
 	- Billboard and LyricsGenius data, artist name, song title, lyrics etc.
+	- Separate csv files for each year's hot lists
 2. [spotify_features_csvs](../master/data/spotify_features_csvs):
 	- Created by: [c_02_data_spotify_song_features.py](../master/source_codes/c_02_data_spotify_song_features.py)
 	- Spotify song features data, artist name, song title, acousticness, danceability, genres etc.
+	- Separate csv files for each year's hot lists
 3. [combined_dataset](../master/data/combined_dataset):
 	- Created by: [c_03_data_combine_hotlist_and_spotify.py](../master/source_codes/c_03_data_combine_hotlist_and_spotify.py)
 	- Updated by: [c_04_data_dataprep_genre_sentiment.py](../master/source_codes/c_04_data_dataprep_genre_sentiment.py)
 	- Combination of newVersionOfLyrics and spotify_features_csvs. Sentiment and Genre Mapping added.
+	- Separate csv files for each year's hot lists
 
 ### Plot Snippet:
 ![Recordit GIF](http://g.recordit.co/GiVH5fq5LX.gif)
