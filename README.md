@@ -87,34 +87,34 @@ nltk.download('stopwords')
 - [Final_Plots.ipynb](../master/Final_Plots.ipynb) : A summary of the plots
 
 ### Data Extraction and Preparation:
- - [c_01_data_data_extract.py](../master/source_codes/c_01_data_data_extract.py) : Get Billboard Hot 100 and Lyrics Genius Data
+ - [c_01_data_data_extract.py](../master/source_codes/c_01_data_data_extract.py) : **Get Billboard Hot 100 and Lyrics Genius Data**
  	- This code creates the main data frame of our project. To run this code you should import pandas, billboard and lyricsgenius Python packages, when you run the code it automatically connects to APIs, gets Billboard Hot 100 data, merges lyrics to it and saves the data to the existing directory. It creates a different csv for each different year and stores them under /data/newVersionOfLyrics. The output data include columns like artist_names, title, lyrics
- - [c_02_data_spotify_song_features.py](../master/source_codes/c_02_data_spotify_song_features.py) : Get Spotify song features using Billboard hotlist
+ - [c_02_data_spotify_song_features.py](../master/source_codes/c_02_data_spotify_song_features.py) : **Get Spotify song features using Billboard hotlist**
  	- To run this code you should import spotipy package and also you should read your spotify credentials to the code. The way to do this is presented in the code. Also; pandas, numpy, and difflib libraries are required. This code uses the output of c_01_data_data_extract.py. For each csv that is located in /data/newVersionOfLyrics it finds the Spotify features using spotipy and stores them under data\spotify_features_csvs. The csv names and dataframe ids are the same as /data/newVersionOfLyrics. 
 	- You should also provide some folder paths to this code, these paths are the paths to the folders in the project Git repo. For example:
 	git_path = os.getcwd(),
 	hot_list_path = '/data/newVersionOfLyrics/',
 	target_path = '/spotify_features_csvs/'
 	- The output data include columns like artist_names, title, lyrics, acousticness, tempo, valence, genre
- - [c_03_data_combine_hotlist_and_spotify.py](../master/source_codes/c_03_data_combine_hotlist_and_spotify.py) : Combine Billboard and Spotify data
+ - [c_03_data_combine_hotlist_and_spotify.py](../master/source_codes/c_03_data_combine_hotlist_and_spotify.py) : **Combine Billboard and Spotify data**
  	- To run this code you should import langdetect, nltk on top of previous packages. This code uses the outputs of the previous two codes, merges them, and stores them under data\combined_dataset. This code also conducts a usability check on the data and labels if the record is valid or not.
- - [c_04_data_dataprep_genre_sentiment.py](../master/source_codes/c_04_data_dataprep_genre_sentiment.py) : Extract genres, create genre mapping, create sentiment feature
+ - [c_04_data_dataprep_genre_sentiment.py](../master/source_codes/c_04_data_dataprep_genre_sentiment.py) : **Extract genres, create genre mapping, create sentiment feature**
  	- To run this code you should import vaderSentiment, textblob on top of the previous libraries. This code creates a mapping between spotify genres and known genres. There are too many genres in the Spotify data, thus we are projecting them onto a lower-dimensional space. This code also conducts sentiment analysis on the lyrics. It uses the files under data\combined_dataset and updates the same folder. Similar to c_02_data_spotify_song_features.py you should again specify your paths.
 
 ### Analysis:
- - [c_05_analysis_hotlist_analysis.py](../master/source_codes/c_05_analysis_hotlist_analysis.py) : Analysis of our raw data, understanding the data
+ - [c_05_analysis_hotlist_analysis.py](../master/source_codes/c_05_analysis_hotlist_analysis.py) : **Analysis of our raw data, understanding the data**
  	- This code includes many functions that allow us to make plots and data manipulations. Example use and import of this code can be found in our Jupyter notebook.
- - [c_06_analysis_artist_popularity.py](../master/source_codes/c_06_analysis_artist_popularity.py) : Analysis of artist popularities
+ - [c_06_analysis_artist_popularity.py](../master/source_codes/c_06_analysis_artist_popularity.py) : **Analysis of artist popularities**
  	- Functions to analyze artist popularity, you can import the functions and use them as we did for c_05_analysis_hotlist_analysis.py
- - [c_07_analysisfun_fact_syp.py](../master/source_codes/c_07_analysisfun_fact_syp.py) : Some fun facts about the dataset
+ - [c_07_analysisfun_fact_syp.py](../master/source_codes/c_07_analysisfun_fact_syp.py) : **Some fun facts about the dataset**
  	- Functions to analyze our data, extract fun facts, you can import the functions and use them as we did for c_05_analysis_hotlist_analysis.py
- - [c_08_analysis_get_top_genre.py](../master/source_codes/c_08_analysis_get_top_genre.py) : A basic analysis on genres
+ - [c_08_analysis_get_top_genre.py](../master/source_codes/c_08_analysis_get_top_genre.py) : **A basic analysis on genres**
  	- Functions to analyze Spotify genres, you can import the functions and use them as we did for c_05_analysis_hotlist_analysis.py
- - [c_09_analysis_genreacous.py](../master/source_codes/c_09_analysis_genreacous.py) : Functions to plot song features
+ - [c_09_analysis_genreacous.py](../master/source_codes/c_09_analysis_genreacous.py) : **Functions to plot song features**
  	- To run this code you need to import plotly and wordcloud packages. It includes the functions to do feature time series plots. The example use of this code can be found in our Jupyter notebook.
- - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : Wordcloud plots for different decades
+ - [c_10_analysis_generation_wordcloud.py](../master/source_codes/c_10_analysis_generation_wordcloud.py) : **Wordcloud plots for different decades**
  	- To run this code you need to import plotly and wordcloud packages. It includes the functions to do wordcloud plots. The example use of this code can be found in our Jupyter notebook.
- - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : Plots about genres in years-decades, related plotting and data read functions
+ - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : **Plots about genres in years-decades, related plotting and data read functions**
  	- Data reading and genre plotting functions. The example use of this code can be found in our Jupyter notebook.
 
 ### Plot Snippet:
