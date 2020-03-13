@@ -117,6 +117,19 @@ nltk.download('stopwords')
  - [c_11_analysis_genre_sentiment_analysis.py](../master/source_codes/c_11_analysis_genre_sentiment_analysis.py) : **Plots about genres in years-decades, related plotting and data read functions**
  	- Data reading and genre plotting functions. The example use of this code can be found in our Jupyter notebook.
 
+## Data Structure:
+- **Our data files can be found [here](../master/data/), in the order they were created:**
+1. [newVersionOfLyrics](../master/data/newVersionOfLyrics):
+	- Created by: [c_01_data_data_extract.py](../master/source_codes/c_01_data_data_extract.py)
+	- Billboard and LyricsGenius data, artist name, song title, lyrics etc.
+2. [spotify_features_csvs](../master/data/spotify_features_csvs):
+	- Created by: [c_02_data_spotify_song_features.py](../master/source_codes/c_02_data_spotify_song_features.py)
+	- Spotify song features data, artist name, song title, acousticness, danceability, genres etc.
+3. [combined_dataset](../master/data/combined_dataset):
+	- Created by: [c_03_data_combine_hotlist_and_spotify.py](../master/source_codes/c_03_data_combine_hotlist_and_spotify.py)
+	- Updated by: [c_04_data_dataprep_genre_sentiment.py](../master/source_codes/c_04_data_dataprep_genre_sentiment.py)
+	- Combination of newVersionOfLyrics and spotify_features_csvs. Sentiment and Genre Mapping added.
+
 ### Plot Snippet:
 ![Recordit GIF](http://g.recordit.co/GiVH5fq5LX.gif)
 
